@@ -3,15 +3,18 @@ Physics II Pinball project with Box2D
 
 https://github.com/JoanDamia/Pinball
 
-Students involved:
-Joan Damià
-Albert Martín
-Laia Pachón
-
-Pinball reference link: https://www.classicgame.com/game/Tom+%26+Jerry+Mousetrap+Pinball
+## Who we are?
+[Joan Damià]()
+[Albert Martín]()
+[Laia Pachón](https://github.com/laiapachon)
 
 
-Controls:
+## References links:
+
+ https://www.classicgame.com/game/Tom+%26+Jerry+Mousetrap+Pinball
+
+
+## Controls:
 
 Left flipper: left arrow
 
