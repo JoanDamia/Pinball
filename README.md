@@ -4,7 +4,7 @@ Physics II Pinball project with Box2D
 https://github.com/JoanDamia/Pinball
 
 ## Who we are?
-[Joan Damià]()
+[Joan Damià](https://github.com/JoanDamia)
 [Albert Martín]()
 [Laia Pachón](https://github.com/laiapachon)
 
