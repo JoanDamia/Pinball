@@ -5,7 +5,7 @@ https://github.com/JoanDamia/Pinball
 
 ## Game description:
 
-The plyer has to get the maximum points bouncing the ball (BB8) in the differents characters of Star Wars(Trope, Chewbacca, C3PO, R2D2). Also, has to hit the ball with the flippers so as not to let ir fall into the void.
+The player has to get the maximum points bouncing the ball (BB8) in the differents characters of Star Wars(Trope, Chewbacca, C3PO, R2D2). Also, has to hit the ball with the flippers so as not to let ir fall into the void.
 
 ## Who we are?
 - [Joan Damià](https://github.com/JoanDamia)
