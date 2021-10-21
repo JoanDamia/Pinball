@@ -19,7 +19,7 @@ The player has to get the maximum points bouncing the ball (BB8) in the differen
 
 - [Tom & Jerry Mousetrap Pinball](https://www.classicgame.com/game/Tom+%26+Jerry+Mousetrap+Pinball)
  
-- [space pinball](https://toytheater.com/space-pinball/)
+- [Space pinball](https://toytheater.com/space-pinball/)
  
 - [Firefighter Pinball](https://www.classicgame.com/game/Firefighter+Pinball)
  
