@@ -1,4 +1,4 @@
-# Pinball
+# Star Wars Pinball
 Physics II Pinball project with Box2D
 
 https://github.com/JoanDamia/Pinball
