@@ -36,7 +36,7 @@ bool ModulePhysics::Start()
 	ground = world->CreateBody(&bd);
 
 	// big static circle as "ground" in the middle of the screen
-	int x = SCREEN_WIDTH / 2;
+	/*int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
 
@@ -51,7 +51,7 @@ bool ModulePhysics::Start()
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	big_ball->CreateFixture(&fixture);
+	big_ball->CreateFixture(&fixture);*/
 
 	return true;
 }
@@ -154,7 +154,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -164,8 +164,8 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 
 	for(uint i = 0; i < size / 2; ++i)
 	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]/1.38);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]/1.38);
 	}
 
 	shape.CreateLoop(p, size / 2);
@@ -191,7 +191,7 @@ update_status ModulePhysics::PostUpdate()
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
-	if(!debug)
+	if(debug)
 		return UPDATE_CONTINUE;
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
