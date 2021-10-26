@@ -54,48 +54,103 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}*/
 
-	/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
 		circles.getLast()->data->listener = this;
-	}*/
+	}
 
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	} 
+	} */
 
 	
 		// Pivot 0, 0
-		int rick_head[28] = {
-					721, 1415,
-					795, 1415,
-					795, 186,
-					775, 126,
-					747, 98,
-					716, 61,
-					680, 30,
-					650, 18,
-					0, 20,
-					0, 1053,
-					227, 1418,
-					493, 1420,
-					724, 1064,
-					723, 1400
-
+		int rick_head[40] = {
+			124, 948,
+			405, 948,
+			521, 773,
+			531, 772,
+			530, 979,
+			578, 979,
+			578, 167,
+			572, 142,
+			562, 112,
+			550, 93,
+			532, 65,
+			517, 50,
+			492, 29,
+			469, 17,
+			445, 5,
+			427, 0,
+			0, 0,
+			0, 753,
+			116, 937,
+			118, 942
 		};
 
-		ricks.add(App->physics->CreateChain(0, 0, rick_head, 28));
-		int rojo[4] = {
-				440, 813,
-				440, 684
-
-		};
-
-		ricks.add(App->physics->CreateChain(0, 0, rojo, 4));
+		ricks.add(App->physics->CreateChain(0, 0, rick_head, 40));
 	
-		
-		
+		int wall[72] = {
+		522, 773,
+		527, 220,
+		521, 201,
+		512, 178,
+		503, 160,
+		491, 144,
+		479, 131,
+		458, 112,
+		439, 100,
+		411, 88,
+		390, 82,
+		369, 79,
+		347, 78,
+		326, 81,
+		307, 86,
+		287, 93,
+		280, 98,
+		259, 96,
+		282, 84,
+		296, 78,
+		316, 74,
+		338, 69,
+		360, 69,
+		382, 71,
+		407, 76,
+		428, 84,
+		451, 95,
+		469, 108,
+		480, 118,
+		495, 133,
+		507, 148,
+		517, 167,
+		527, 186,
+		534, 205,
+		536, 217,
+		532, 773
+		};
+
+		ricks.add(App->physics->CreateChain(0, 0, wall, 72));
+
+		int rojo[10] = {
+		434, 681,
+		444, 680,
+		443, 816,
+		432, 815,
+		434, 688
+		};
+
+		ricks.add(App->physics->CreateChain(0, 0, rojo, 10));
+		int azul[10] = {
+			71, 681,
+			82, 682,
+			90, 811,
+			79, 811,
+			71, 689
+		};
+
+		ricks.add(App->physics->CreateChain(0, 0, azul, 10));
 		
 	// Prepare for raycast ------------------------------------------------------
 	
@@ -144,14 +199,7 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	c = ricks.getFirst();
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+	
 
 	// ray -----------------
 	if(ray_on == true)
