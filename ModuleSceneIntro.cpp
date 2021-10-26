@@ -92,7 +92,7 @@ update_status ModuleSceneIntro::Update()
 
 		};
 
-		palo1.add(App->physics->CreateChain(0, 0, rojo, 4));
+		ricks.add(App->physics->CreateChain(0, 0, rojo, 4));
 	
 		
 		
@@ -143,13 +143,13 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
-	c = palo1.getFirst();
 
+	c = ricks.getFirst();
 	while (c != NULL)
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(palo1, x, y, NULL, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
