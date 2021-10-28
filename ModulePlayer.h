@@ -3,6 +3,14 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+struct Flipper
+{
+	PhysBody* Rect;
+	PhysBody* Circle;
+	bool rightSide;
+
+};
+
 class ModulePlayer : public Module
 {
 public:
