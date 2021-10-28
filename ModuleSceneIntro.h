@@ -17,6 +17,8 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void map();
+	void colisions();
+	void player();
 
 public:
 	p2List<PhysBody*> circles;

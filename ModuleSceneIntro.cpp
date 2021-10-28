@@ -30,7 +30,9 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/pinball 1er collider.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
-
+	map();
+	colisions();
+	player();
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
@@ -130,9 +132,21 @@ void ModuleSceneIntro::map() {
 
 	ricks.add(App->physics->CreateChain(0, 0, azul, 10));
 }
+void ModuleSceneIntro::colisions() {
+	circles.add(App->physics->_CreateCircle(98, 118, 45));
+
+	circles.add(App->physics->_CreateCircle(266, 302, 45));
+	circles.add(App->physics->_CreateCircle(346, 738, 45));
+	circles.add(App->physics->_CreateCircle(177, 738, 45));
+}
+void ModuleSceneIntro::player() {
+	circles.add(App->physics->CreateCircle(460, 750, 15));
+	/*circles.getLast()->data->listener = this;*/
+}
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	
 	/*if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -140,11 +154,16 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}*/
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
-		circles.getLast()->data->listener = this;
-	}
+	
+
+
+
+
+	
+	
+		
+	
+
 
 	/*if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
