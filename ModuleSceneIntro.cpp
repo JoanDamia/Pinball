@@ -47,30 +47,26 @@ bool ModuleSceneIntro::CleanUp()
 }
 void ModuleSceneIntro::map() {
 	// Pivot 0, 0
-	int rick_head[40] = {
-		124, 948,
-		405, 948,
-		521, 773,
-		531, 772,
-		530, 979,
-		578, 979,
-		578, 167,
-		572, 142,
-		562, 112,
-		550, 93,
-		532, 65,
-		517, 50,
-		492, 29,
-		469, 17,
-		445, 5,
-		427, 0,
-		0, 0,
-		0, 753,
-		116, 937,
-		118, 942
+	int rick_head[32] = {
+	531, 950,
+	578, 950,
+	578, 173,
+	573, 138,
+	550, 94,
+	530, 62,
+	511, 43,
+	487, 24,
+	464, 13,
+	1, 13,
+	0, 756,
+	121, 949,
+	404, 949,
+	520, 772,
+	531, 772,
+	529, 937
 	};
 
-	ricks.add(App->physics->CreateChain(0, 0, rick_head, 40));
+	ricks.add(App->physics->CreateChain(0, 0, rick_head, 32));
 
 	int wall[72] = {
 	522, 773,
@@ -140,7 +136,7 @@ void ModuleSceneIntro::colisions() {
 	circles.add(App->physics->_CreateCircle(177, 738, 45));
 }
 void ModuleSceneIntro::player() {
-	circles.add(App->physics->CreateCircle(460, 750, 15));
+	circles.add(App->physics->CreateCircle(550, 750, 15));
 	/*circles.getLast()->data->listener = this;*/
 }
 // Update: draw background
@@ -244,7 +240,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	App->audio->PlayFx(bonus_fx);
 
-	/*
+	
 	if(bodyA)
 	{
 		bodyA->GetPosition(x, y);
@@ -255,5 +251,5 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		bodyB->GetPosition(x, y);
 		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
+	}
 }
