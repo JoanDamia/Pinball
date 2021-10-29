@@ -60,10 +60,10 @@ bool ModulePhysics::Start()
 	};
 
 
-	l_flipper = CreateFlippers(106, 455, left_flipper, 14); //dyn
-	r_flipper = CreateFlippers(227, 475, right_flipper, 14); //dyn
-	l_joint = _CreateCircle(110, 457, 3);
-	r_joint = _CreateCircle(265, 457, 3);
+	l_flipper = CreateFlippers(183, 877, left_flipper, 14); //dyn
+	r_flipper = CreateFlippers(348, 877, right_flipper, 14); //dyn
+	l_joint = _CreateCircle(183, 877, 3);
+	r_joint = _CreateCircle(348, 877, 3);
 	spring1 = CreateSpring1(555, 1010, 50, 30);
 	spring2 = CreateSpring2(555, 900, 40, 30);
 
