@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/pinball 1er collider.png");
+	rick = App->textures->Load("pinball/pinball2.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	map();
@@ -47,26 +47,29 @@ bool ModuleSceneIntro::CleanUp()
 }
 void ModuleSceneIntro::map() {
 	// Pivot 0, 0
-	int rick_head[32] = {
-	531, 950,
-	578, 950,
-	578, 173,
-	573, 138,
-	550, 94,
-	530, 62,
-	511, 43,
-	487, 24,
-	464, 13,
-	1, 13,
-	0, 756,
-	121, 949,
-	404, 949,
+	int rick_head[38] = {
+	535, 1030,
+	585, 1030,
+	578, 175,
+	570, 137,
+	557, 110,
+	545, 89,
+	530, 67,
+	510, 47,
+	488, 27,
+	456, 10,
+	430, -1,
+	1, -1,
+	-1, 754,
+	172, 1028,
+	350, 1030,
 	520, 772,
-	531, 772,
-	529, 937
+	530, 768,
+	528, 1011,
+	528, 1020
 	};
 
-	ricks.add(App->physics->CreateChain(0, 0, rick_head, 32));
+	ricks.add(App->physics->CreateChain(0, 0, rick_head, 38));
 
 	int wall[72] = {
 	522, 773,
