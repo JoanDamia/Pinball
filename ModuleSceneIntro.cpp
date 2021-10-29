@@ -223,7 +223,7 @@ update_status ModuleSceneIntro::Update()
 
 	App->renderer->Blit(lKiker, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
 	App->renderer->Blit(rKiker, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
-
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
@@ -244,6 +244,19 @@ update_status ModuleSceneIntro::Update()
 			App->physics->l_flipper->body->ApplyForce({ -10, -80 }, { 0, 0 }, true);
 		}
 	}
+
+	App->renderer->Blit(spring3, 200, 447, NULL, 1.0f, App->physics->spring2->GetRotation(), 62, 9);
+	
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		App->physics->spring2->body->ApplyForce({ 0, 100 }, { 0, 0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+		{
+			App->physics->spring2->body->ApplyForce({ 0, -100 }, { 0, 0 }, true);
+		}
+	}
+
 	// ray -----------------
 	if(ray_on == true)
 	{

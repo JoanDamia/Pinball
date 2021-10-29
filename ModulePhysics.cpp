@@ -35,6 +35,7 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
+	
 
 	// Pivot 0, 0
 	int left_flipper[14] = {
@@ -63,6 +64,8 @@ bool ModulePhysics::Start()
 	r_flipper = CreateFlippers(227, 475, right_flipper, 14); //dyn
 	l_joint = _CreateCircle(110, 457, 3);
 	r_joint = _CreateCircle(265, 457, 3);
+	spring1 = CreateSpring1(555, 1010, 50, 30);
+	spring2 = CreateSpring2(555, 900, 40, 30);
 
 	b2RevoluteJointDef Def;
 	Def.bodyA = l_flipper->body;
@@ -84,7 +87,17 @@ bool ModulePhysics::Start()
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
 	r_fix = (b2RevoluteJoint*)world->CreateJoint(&Def2);
 
-
+	b2DistanceJointDef Def3;
+	Def3.bodyA = spring1->body;
+	Def3.bodyB = spring2->body;
+	Def3.collideConnected = true;
+	Def3.localAnchorA = b2Vec2(0, 0);
+	Def3.localAnchorB = b2Vec2(0, 0);
+	Def3.length = 3;
+	Def3.collideConnected = true;
+	Def3.frequencyHz = 4.0f;
+	Def3.dampingRatio = 0.5f;
+	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);
 
 	// big static circle as "ground" in the middle of the screen
 	/*int x = SCREEN_WIDTH / 2;
@@ -195,6 +208,57 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	b->SetUserData(pbody);
 	pbody->width = width * 0.5f;
 	pbody->height = height * 0.5f;
+
+	return pbody;
+}
+
+
+PhysBody* ModulePhysics::CreateSpring1(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width * 1.0f;
+	pbody->height = height * 3.5f;
+
+	return pbody;
+}
+
+PhysBody* ModulePhysics::CreateSpring2(int x, int y, int width, int height)
+{
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->width = width * 1.0f;
+	pbody->height = height * 3.5f;
 
 	return pbody;
 }
