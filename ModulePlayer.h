@@ -4,13 +4,6 @@
 #include "p2Point.h"
 #include "p2List.h"
 
-struct Flipper
-{
-	PhysBody* Rect;
-	PhysBody* Circle;
-	bool rightSide;
-
-};
 
 class ModulePlayer : public Module
 {

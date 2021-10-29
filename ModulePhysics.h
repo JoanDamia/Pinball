@@ -45,9 +45,18 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* _CreateCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateFlippers(int x, int y, int* points, int size);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
+
+	PhysBody* l_flipper;
+	PhysBody* r_flipper;
+	PhysBody* l_joint;
+	PhysBody* r_joint;
+
+	b2RevoluteJoint* l_fix;
+	b2RevoluteJoint* r_fix;
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 

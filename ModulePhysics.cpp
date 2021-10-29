@@ -35,6 +35,57 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
+
+	// Pivot 0, 0
+	int left_flipper[14] = {
+		0, 10,
+		2, 3,
+		10, 1,
+		69, 6,
+		72, 11,
+		68, 17,
+		5, 18
+	};
+
+	// Pivot 0, 0
+	int right_flipper[14] = {
+		72, 5,
+		65, 0,
+		2, 6,
+		0, 12,
+		4, 16,
+		64, 18,
+		72, 14
+	};
+
+
+	l_flipper = CreateFlippers(106, 455, left_flipper, 14); //dyn
+	r_flipper = CreateFlippers(227, 475, right_flipper, 14); //dyn
+	l_joint = _CreateCircle(110, 457, 3);
+	r_joint = _CreateCircle(265, 457, 3);
+
+	b2RevoluteJointDef Def;
+	Def.bodyA = l_flipper->body;
+	Def.bodyB = l_joint->body;
+	Def.collideConnected = false;
+	Def.upperAngle = 25 * DEGTORAD;
+	Def.lowerAngle = -25 * DEGTORAD;
+	Def.enableLimit = true;
+	Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
+	l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
+
+	b2RevoluteJointDef Def2;
+	Def2.bodyA = r_flipper->body;
+	Def2.bodyB = r_joint->body;
+	Def2.collideConnected = false;
+	Def2.upperAngle = 30 * DEGTORAD;
+	Def2.lowerAngle = -25 * DEGTORAD;
+	Def2.enableLimit = true;
+	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
+	r_fix = (b2RevoluteJoint*)world->CreateJoint(&Def2);
+
+
+
 	// big static circle as "ground" in the middle of the screen
 	/*int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
@@ -98,6 +149,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 
 	return pbody;
 }
+
 PhysBody* ModulePhysics::_CreateCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
@@ -146,6 +198,40 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 
 	return pbody;
 }
+
+PhysBody* ModulePhysics::CreateFlippers(int x, int y, int* points, int size)
+{
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+	b2PolygonShape box;
+
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	box.Set(p, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->height = pbody->width = 0;
+
+	return pbody;
+}
+
 
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
 {

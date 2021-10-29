@@ -218,8 +218,29 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	
+	App->renderer->Blit(lKiker, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
+	App->renderer->Blit(rKiker, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
 
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		App->physics->r_flipper->body->ApplyForce({ -10, -80 }, { 0, 0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+		{
+			App->physics->r_flipper->body->ApplyForce({ 10, 80 }, { 0, 0 }, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		App->physics->l_flipper->body->ApplyForce({ 10, 80 }, { 0, 0 }, true);
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+		{
+			App->physics->l_flipper->body->ApplyForce({ -10, -80 }, { 0, 0 }, true);
+		}
+	}
 	// ray -----------------
 	if(ray_on == true)
 	{
