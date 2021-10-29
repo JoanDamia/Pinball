@@ -25,7 +25,7 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	circle = App->textures->Load("pinball/wheel.png"); 
+	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/pinball 1er collider.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -137,6 +137,8 @@ void ModuleSceneIntro::colisions() {
 }
 void ModuleSceneIntro::player() {
 	circles.add(App->physics->CreateCircle(550, 750, 15));
+	App->renderer->Blit(circle, 550, 750);
+	
 	/*circles.getLast()->data->listener = this;*/
 }
 // Update: draw background
