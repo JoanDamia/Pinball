@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/pinball2.png");
+	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	map();
@@ -47,29 +47,35 @@ bool ModuleSceneIntro::CleanUp()
 }
 void ModuleSceneIntro::map() {
 	// Pivot 0, 0
-	int rick_head[38] = {
-	535, 1030,
-	585, 1030,
-	578, 175,
-	570, 137,
-	557, 110,
-	545, 89,
-	530, 67,
-	510, 47,
-	488, 27,
-	456, 10,
-	430, -1,
-	1, -1,
-	-1, 754,
-	172, 1028,
-	350, 1030,
-	520, 772,
-	530, 768,
-	528, 1011,
-	528, 1020
+	int rick_head[50] = {
+	1, 755,
+	173, 1029,
+	173, 1060,
+	353, 1060,
+	353, 1030,
+	523, 773,
+	530, 774,
+	530, 1030,
+	578, 1030,
+	578, 174,
+	573, 142,
+	564, 114,
+	553, 95,
+	541, 79,
+	527, 61,
+	512, 46,
+	493, 31,
+	478, 21,
+	462, 12,
+	445, 4,
+	426, 0,
+	1, 1,
+	0, 576,
+	0, 637,
+	0, 743
 	};
 
-	ricks.add(App->physics->CreateChain(0, 0, rick_head, 38));
+	ricks.add(App->physics->CreateChain(0, 0, rick_head, 50));
 
 	int wall[72] = {
 	522, 773,
@@ -130,13 +136,47 @@ void ModuleSceneIntro::map() {
 	};
 
 	ricks.add(App->physics->CreateChain(0, 0, azul, 10));
+	int verde[8] = {
+		91, 809,
+		172, 879,
+		167, 886,
+		79, 809
+	};
+
+	ricks.add(App->physics->CreateChain(0, 0, verde, 8));
+	int otroverde[8] = {
+		434, 804,
+		357, 870,
+		363, 881,
+		443, 810
+	};
+
+	ricks.add(App->physics->CreateChain(0, 0, otroverde, 8));
+	int otro[10] = {
+		459, 329,
+		462, 320,
+		527, 351,
+		526, 361,
+		464, 332
+	};
+
+	ricks.add(App->physics->CreateChain(0, 0, otro, 10));
+	int otromas[10] = {
+		57, 316,
+		61, 324,
+		0, 353,
+		-3, 345,
+		53, 320
+	};
+
+	ricks.add(App->physics->CreateChain(0, 0, otromas, 10));
 }
 void ModuleSceneIntro::colisions() {
 	circles.add(App->physics->_CreateCircle(98, 118, 45));
 
 	circles.add(App->physics->_CreateCircle(266, 302, 45));
-	circles.add(App->physics->_CreateCircle(346, 738, 45));
-	circles.add(App->physics->_CreateCircle(177, 738, 45));
+	circles.add(App->physics->_CreateCircle(345, 698, 45));
+	circles.add(App->physics->_CreateCircle(173, 527, 45));
 }
 void ModuleSceneIntro::player() {
 	circles.add(App->physics->CreateCircle(550, 750, 15));
