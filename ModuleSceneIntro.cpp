@@ -30,6 +30,8 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
+	flipperL=App->textures->Load("pinball/flipperL"); 
+	
 	map();
 	colisions();
 	player();
@@ -196,10 +198,18 @@ update_status ModuleSceneIntro::Update()
 	}*/
 
 	
+	
+	//App->renderer->App->physics->l_flipper.Blit(flipperL, 183, 877);
 
 
+	PhysBody* f = App->physics->l_flipper;
 
+		int x, y;
+		f->GetPosition(x, y);
 
+		App->renderer->Blit(flipperL, x, y - 5, false, 1.0f, f->GetRotation());
+		
+		
 	
 	
 		

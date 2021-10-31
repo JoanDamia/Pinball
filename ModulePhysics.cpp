@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "ModuleSceneIntro.h"
 #include "p2Point.h"
 #include "math.h"
 
@@ -38,14 +39,31 @@ bool ModulePhysics::Start()
 	
 
 	// Pivot 0, 0
-	int left_flipper[14] = {
-		0, 10,
-		2, 3,
-		10, 1,
-		69, 6,
-		72, 11,
-		68, 17,
-		5, 18
+	int left_flipper[48] = {
+		285, 927,
+		285, 920,
+		291, 914,
+		298, 908,
+		306, 901,
+		315, 893,
+		323, 886,
+		330, 880,
+		337, 873,
+		344, 870,
+		351, 870,
+		359, 874,
+		363, 879,
+		365, 884,
+		364, 892,
+		359, 897,
+		351, 902,
+		340, 907,
+		332, 911,
+		323, 916,
+		316, 920,
+		307, 925,
+		296, 931,
+		288, 931
 	};
 
 	// Pivot 0, 0
@@ -60,7 +78,7 @@ bool ModulePhysics::Start()
 	};
 
 
-	l_flipper = CreateFlippers(183, 877, left_flipper, 14); //dyn
+	l_flipper = CreateFlippers(183, 877, left_flipper, 48); //dyn
 	r_flipper = CreateFlippers(348, 877, right_flipper, 14); //dyn
 	l_joint = _CreateCircle(183, 877, 3);
 	r_joint = _CreateCircle(348, 877, 3);

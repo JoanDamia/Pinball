@@ -32,6 +32,7 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* flipperL;
 	SDL_Texture* lKiker, * rKiker;
 	SDL_Texture* spring3;
 	//SDL_Texture* palo1_;
