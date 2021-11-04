@@ -45,21 +45,21 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* _CreateCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateFlippers(int x, int y, int* points, int size);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+	PhysBody* CreateChainF(int x, int y, int* points, int size);
 	PhysBody* CreateSpring1(int x, int y, int width, int height);
 	PhysBody* CreateSpring2(int x, int y, int width, int height);
 
 	PhysBody* l_flipper;
 	PhysBody* r_flipper;
-	PhysBody* l_joint;
-	PhysBody* r_joint;
 	PhysBody* spring1;
 	PhysBody* spring2;
-
+	PhysBody* l_joint;
+	PhysBody* r_joint;
 	b2RevoluteJoint* l_fix;
 	b2RevoluteJoint* r_fix;
+	
 	b2DistanceJoint* spring;
 
 	// b2ContactListener ---

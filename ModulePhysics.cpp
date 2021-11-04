@@ -36,55 +36,10 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	
+	l_joint=_CreateCircle(183, 877, 3);
+	r_joint=_CreateCircle(348, 877, 3);
 
 	// Pivot 0, 0
-	int left_flipper[48] = {
-		285, 927,
-		285, 920,
-		291, 914,
-		298, 908,
-		306, 901,
-		315, 893,
-		323, 886,
-		330, 880,
-		337, 873,
-		344, 870,
-		351, 870,
-		359, 874,
-		363, 879,
-		365, 884,
-		364, 892,
-		359, 897,
-		351, 902,
-		340, 907,
-		332, 911,
-		323, 916,
-		316, 920,
-		307, 925,
-		296, 931,
-		288, 931
-	};
-
-	// Pivot 0, 0
-	int right_flipper[14] = {
-		72, 5,
-		65, 0,
-		2, 6,
-		0, 12,
-		4, 16,
-		64, 18,
-		72, 14
-	};
-
-
-	l_flipper = CreateFlippers(183, 877, left_flipper, 48); //dyn
-	r_flipper = CreateFlippers(348, 877, right_flipper, 14); //dyn
-	l_joint = _CreateCircle(183, 877, 3);
-	r_joint = _CreateCircle(348, 877, 3);
-	spring1 = CreateSpring1(555, 1010, 50, 30);
-	spring2 = CreateSpring2(555, 900, 30, 30);
-
 	b2RevoluteJointDef Def;
 	Def.bodyA = l_flipper->body;
 	Def.bodyB = l_joint->body;
@@ -105,6 +60,8 @@ bool ModulePhysics::Start()
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
 	r_fix = (b2RevoluteJoint*)world->CreateJoint(&Def2);
 
+	spring1 = CreateSpring1(555, 1010, 50, 30);
+	spring2 = CreateSpring2(555, 900, 30, 30);
 	b2DistanceJointDef Def3;
 	Def3.bodyA = spring1->body;
 	Def3.bodyB = spring2->body;
@@ -281,38 +238,7 @@ PhysBody* ModulePhysics::CreateSpring2(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateFlippers(int x, int y, int* points, int size)
-{
-	b2BodyDef body;
-	body.type = b2_dynamicBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
-	b2Body* b = world->CreateBody(&body);
-	b2PolygonShape box;
-
-	b2Vec2* p = new b2Vec2[size / 2];
-
-	for (uint i = 0; i < size / 2; ++i)
-	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
-	}
-
-	box.Set(p, size / 2);
-
-	b2FixtureDef fixture;
-	fixture.shape = &box;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->height = pbody->width = 0;
-
-	return pbody;
-}
 
 
 PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
@@ -341,6 +267,8 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 
 	return pbody;
 }
+
+
 
 PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 {
@@ -376,6 +304,38 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateChainF(int x, int y, int* points, int size)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2ChainShape shape;
+	b2Vec2* p = new b2Vec2[size / 2];
+	
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0] / 1);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1] / 1);
+	}
+
+	shape.CreateLoop(p, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+	pbody->height = pbody->width = 0;
+
+	return pbody;
+}
 // 
 update_status ModulePhysics::PostUpdate()
 {

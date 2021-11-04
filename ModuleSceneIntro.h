@@ -3,6 +3,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "ModulePhysics.h"
 
 class PhysBody;
 
@@ -24,11 +25,15 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
-	//p2List<PhysBody*> palo1;
+	p2List<PhysBody*> l_flipper;
+	p2List < PhysBody*> r_flipper;
 
+	
+	//p2List<PhysBody*> palo1;
+	
 	PhysBody* sensor;
 	bool sensed;
-
+	b2World* world;
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
