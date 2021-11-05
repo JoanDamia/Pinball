@@ -295,18 +295,20 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
-	App->renderer->Blit(spring3, 200, 447, NULL, 1.0f, App->physics->spring2->GetRotation(), 62, 9);
 	
+	static int forc = 0;
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		App->physics->spring2->body->ApplyForce({ 0, 100 }, { 0, 0 }, true);
+		forc += 800;
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-		{
-			App->physics->spring2->body->ApplyForce({ 0, -100 }, { 0, 0 }, true);
-		}
+		if (forc > 1800)
+			forc = 1800;
+		
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
+		App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
+	
+	}
 	// ray -----------------
 	if(ray_on == true)
 	{
