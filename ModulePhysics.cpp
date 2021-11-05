@@ -6,6 +6,7 @@
 #include "ModuleSceneIntro.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModuleTextures.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -83,8 +84,8 @@ bool ModulePhysics::Start()
 	l_joint = _CreateCircle(183, 877, 3);
 	r_joint = _CreateCircle(348, 877, 3);
 	spring1 = CreateSpring1(555, 1010, 50, 30);
-	spring2 = CreateSpring2(555, 900, 47, 30);
-
+	spring2 = CreateSpring2(555, 900, 47, 40);
+	
 	b2RevoluteJointDef Def;
 	Def.bodyA = l_flipper->body;
 	Def.bodyB = l_joint->body;

@@ -9,7 +9,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	circle = box = rick = spring =NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -31,6 +31,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	flipperL=App->textures->Load("pinball/flipperL"); 
+	spring = App->textures->Load("pinball/muelle.png");
 	
 	map();
 	colisions();
@@ -269,7 +270,9 @@ update_status ModuleSceneIntro::Update()
 		c->data->GetPosition(x, y);
 		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
+		
 	}
+	
 
 	App->renderer->Blit(lKiker, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
 	App->renderer->Blit(rKiker, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
@@ -297,10 +300,13 @@ update_status ModuleSceneIntro::Update()
 
 	
 	static int forc = 0;
+	
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		forc -= 10;
+		
 		App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
+		
 		/*forc -= 800;*/
 
 		/*if (forc > 1800)
@@ -312,6 +318,7 @@ update_status ModuleSceneIntro::Update()
 		if (forc > 4)
 			forc = 4;
 	}
+	App->renderer->Blit(spring, 535, 830, NULL, 1.0f, App->physics->spring2->GetRotation());
 	// ray -----------------
 	if(ray_on == true)
 	{

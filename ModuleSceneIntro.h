@@ -34,7 +34,8 @@ public:
 	SDL_Texture* rick;
 	SDL_Texture* flipperL;
 	SDL_Texture* lKiker, * rKiker;
-	SDL_Texture* spring3;
+	SDL_Texture* spring;
+	
 	//SDL_Texture* palo1_;
 	uint bonus_fx;
 	p2Point<int> ray;
