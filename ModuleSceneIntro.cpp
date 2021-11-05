@@ -299,15 +299,18 @@ update_status ModuleSceneIntro::Update()
 	static int forc = 0;
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		forc += 800;
+		forc -= 10;
+		App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
+		/*forc -= 800;*/
 
-		if (forc > 1800)
-			forc = 1800;
+		/*if (forc > 1800)
+			forc = 1800;*/
 		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
-		App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
-	
+		/*App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);*/
+		if (forc > 4)
+			forc = 4;
 	}
 	// ray -----------------
 	if(ray_on == true)
