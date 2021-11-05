@@ -40,17 +40,17 @@ bool ModulePhysics::Start()
 	r_joint=_CreateCircle(348, 877, 3);
 
 	// Pivot 0, 0
-	b2RevoluteJointDef Def;
-	Def.bodyA = l_flipper->body;
-	Def.bodyB = l_joint->body;
-	Def.collideConnected = false;
-	Def.upperAngle = 25 * DEGTORAD;
-	Def.lowerAngle = -25 * DEGTORAD;
-	Def.enableLimit = true;
-	Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
-	l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
+	//b2RevoluteJointDef Def;
+	//Def.bodyA = l_flipper->body;
+	//Def.bodyB = l_joint->body;
+	//Def.collideConnected = false;
+	//Def.upperAngle = 25 * DEGTORAD;
+	//Def.lowerAngle = -25 * DEGTORAD;
+	//Def.enableLimit = true;
+	//Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
+	//l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
 
-	b2RevoluteJointDef Def2;
+	/*b2RevoluteJointDef Def2;
 	Def2.bodyA = r_flipper->body;
 	Def2.bodyB = r_joint->body;
 	Def2.collideConnected = false;
@@ -72,7 +72,7 @@ bool ModulePhysics::Start()
 	Def3.collideConnected = true;
 	Def3.frequencyHz = 4.0f;
 	Def3.dampingRatio = 0.5f;
-	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);
+	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);*/
 
 	// big static circle as "ground" in the middle of the screen
 	/*int x = SCREEN_WIDTH / 2;
