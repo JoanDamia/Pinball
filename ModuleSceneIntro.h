@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Globals.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
 
 class PhysBody;
 
@@ -32,6 +33,8 @@ public:
 	int flipperF;
 	
 	//p2List<PhysBody*> palo1;
+
+	Spring spring1;
 	
 	PhysBody* sensor;
 	bool sensed;
@@ -41,7 +44,7 @@ public:
 	SDL_Texture* rick;
 	SDL_Texture* flipperL;
 	SDL_Texture* flipperR;
-	SDL_Texture* spring3;
+	SDL_Texture* spring_1;
 	//SDL_Texture* palo1_;
 	uint bonus_fx;
 	p2Point<int> ray;

@@ -60,8 +60,7 @@ bool ModulePhysics::Start()
 
 
 
-	spring1 = CreateSpring1(555, 1010, 50, 30);
-	spring2 = CreateSpring2(555, 900, 40, 30);
+	
 
 	b2RevoluteJointDef Def;
 	Def.collideConnected = false;
@@ -81,19 +80,7 @@ bool ModulePhysics::Start()
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
 
 
-	spring1 = CreateSpring1(555, 1010, 50, 30);
-	spring2 = CreateSpring2(555, 900, 30, 30);
-	b2DistanceJointDef Def3;
-	Def3.bodyA = spring1->body;
-	Def3.bodyB = spring2->body;
-	Def3.collideConnected = true;
-	Def3.localAnchorA = b2Vec2(0, 0);
-	Def3.localAnchorB = b2Vec2(0, 0);
-	Def3.length = 3;
-	Def3.collideConnected = true;
-	Def3.frequencyHz = 4.0f;
-	Def3.dampingRatio = 0.5f;
-	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);
+	
 
 	/* big static circle as "ground" in the middle of the screen*/
 	int x = SCREEN_WIDTH * 2;
@@ -209,10 +196,10 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 }
 
 
-PhysBody* ModulePhysics::CreateSpring1(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateSpring1(int x, int y, int width, int height, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_staticBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -234,10 +221,10 @@ PhysBody* ModulePhysics::CreateSpring1(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateSpring2(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateSpring2(int x, int y, int width, int height, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -323,6 +310,23 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	pbody->width = pbody->height = 0;
 
 	return pbody;
+}
+
+b2PrismaticJoint* ModulePhysics::CreatePrismaticJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, b2Vec2 axys, float maxHeight, bool collideConnected, bool enableLimit)
+{
+	b2PrismaticJointDef prismaticJointDef;
+	prismaticJointDef.bodyA = A->body;
+	prismaticJointDef.bodyB = B->body;
+	prismaticJointDef.collideConnected = collideConnected;
+	prismaticJointDef.localAxisA.Set(axys.x, axys.y);
+	prismaticJointDef.localAnchorA.Set(anchorA.x, anchorA.y);
+	prismaticJointDef.localAnchorB.Set(anchorB.x, anchorB.y);
+	prismaticJointDef.referenceAngle = 0;
+	prismaticJointDef.enableLimit = enableLimit;
+	prismaticJointDef.lowerTranslation = -0.01;
+	prismaticJointDef.upperTranslation = maxHeight;
+
+	return (b2PrismaticJoint*)world->CreateJoint(&prismaticJointDef);
 }
 
 

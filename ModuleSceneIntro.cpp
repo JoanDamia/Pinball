@@ -26,6 +26,12 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+
+	spring1.pivot = App->physics->CreateSpring1(555, 1010, 50, 30);
+	spring1.mobile = App->physics->CreateSpring2(555, 920, 40, 40);
+	App->physics->CreatePrismaticJoint(spring1.mobile, { 0,0 }, spring1.pivot, { 0,0 }, { 0,4 }, 3.9f);
+
+
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/pinball3.png");
@@ -277,16 +283,26 @@ update_status ModuleSceneIntro::Update()
 		r_flipper->body->ApplyForceToCenter(b2Vec2(0, flipperF), 1);
 	}
 
-	App->renderer->Blit(spring3, 200, 447, NULL, 1.0f, App->physics->spring2->GetRotation(), 62, 9);
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) != KEY_REPEAT)
+	{
+		App->renderer->Blit(spring_1, 535, 800);
+
+	}
+	else
+	{
+		App->renderer->Blit(spring_1, 535, 950);
+	}
+
+	spring1.mobile->body->ApplyForce({ 0,-40 }, { 0,0 }, true);
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		App->physics->spring2->body->ApplyForce({ 0, 100 }, { 0, 0 }, true);
+		spring1.mobile->body->ApplyForce({ 0,80 }, { 0,0 }, true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		spring1.mobile->body->ApplyForce({ 0,-900 }, { 0,0 }, true);
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-		{
-			App->physics->spring2->body->ApplyForce({ 0, -100 }, { 0, 0 }, true);
-		}
 	}
 
 	// ray -----------------

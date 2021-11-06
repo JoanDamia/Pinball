@@ -5,6 +5,13 @@
 #include "p2List.h"
 
 
+struct Spring
+{
+	PhysBody* pivot;
+	PhysBody* mobile;
+};
+
+
 class ModulePlayer : public Module
 {
 public:
@@ -16,5 +23,10 @@ public:
 	bool CleanUp();
 
 public:
+
+	Spring spring;
+	//
+
+	bool sensed;
 
 };
