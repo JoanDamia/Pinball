@@ -40,7 +40,7 @@ bool ModulePhysics::Start()
 	r_joint=_CreateCircle(348, 877, 3);
 
 	// Pivot 0, 0
-<<<<<<< HEAD
+
 	//b2RevoluteJointDef Def;
 	//Def.bodyA = l_flipper->body;
 	//Def.bodyB = l_joint->body;
