@@ -38,7 +38,7 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* flipperL;
-	SDL_Texture* lKiker, * rKiker;
+	SDL_Texture* flipperR;
 	SDL_Texture* spring3;
 	//SDL_Texture* palo1_;
 	uint bonus_fx;

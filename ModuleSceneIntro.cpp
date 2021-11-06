@@ -30,7 +30,8 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
-	flipperL=App->textures->Load("pinball/flipperL"); 
+	flipperL=App->textures->Load("pinball/flipperL");
+	flipperL = App->textures->Load("pinball/flipperR");
 	
 	map();
 	colisions();
@@ -280,8 +281,8 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	App->renderer->Blit(lKiker, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
-	App->renderer->Blit(rKiker, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
+	App->renderer->Blit(flipperL, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
+	App->renderer->Blit(flipperR, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
