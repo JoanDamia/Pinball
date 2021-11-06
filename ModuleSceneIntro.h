@@ -20,14 +20,16 @@ public:
 	void map();
 	void colisions();
 	void player();
-
+	void CreateFlippers();
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
-	p2List<PhysBody*> l_flipper;
-	p2List < PhysBody*> r_flipper;
-
+	PhysBody* l_flipper;
+	PhysBody* l_flipperC;
+	PhysBody* r_flipper;
+	PhysBody* r_flipperC;
+	int flipperF;
 	
 	//p2List<PhysBody*> palo1;
 	

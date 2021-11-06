@@ -12,6 +12,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
+	flipperF = -200;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -174,14 +175,6 @@ void ModuleSceneIntro::map() {
 
 	ricks.add(App->physics->CreateChain(0, 0, otromas, 10));
 	
-
-
-
-	
-
-	
-
-	
 }
 void ModuleSceneIntro::colisions() {
 	circles.add(App->physics->_CreateCircle(98, 118, 45));
@@ -212,13 +205,7 @@ update_status ModuleSceneIntro::Update()
 	//App->renderer->App->physics->l_flipper.Blit(flipperL, 183, 877);
 
 
-	PhysBody* f = App->physics->l_flipper;
 
-		int x, y;
-		f->GetPosition(x, y);
-
-		App->renderer->Blit(flipperL, x, y - 5, false, 1.0f, f->GetRotation());
-		
 		
 	
 	
@@ -281,28 +268,13 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	App->renderer->Blit(flipperL, 100, 447, NULL, 1.0f, App->physics->l_flipper->GetRotation(), 10, 10);
-	App->renderer->Blit(flipperR, 200, 447, NULL, 1.0f, App->physics->r_flipper->GetRotation(), 62, 9);
+
 	
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		App->physics->r_flipper->body->ApplyForce({ -10, -80 }, { 0, 0 }, true);
-
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
-		{
-			App->physics->r_flipper->body->ApplyForce({ 10, 80 }, { 0, 0 }, true);
-		}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		l_flipper->body->ApplyForceToCenter(b2Vec2(0, flipperF), 1);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		App->physics->l_flipper->body->ApplyForce({ 10, 80 }, { 0, 0 }, true);
-
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
-		{
-			App->physics->l_flipper->body->ApplyForce({ -10, -80 }, { 0, 0 }, true);
-		}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		r_flipper->body->ApplyForceToCenter(b2Vec2(0, flipperF), 1);
 	}
 
 	App->renderer->Blit(spring3, 200, 447, NULL, 1.0f, App->physics->spring2->GetRotation(), 62, 9);
@@ -351,4 +323,53 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyB->GetPosition(x, y);
 		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
 	}
+}
+
+void ModuleSceneIntro::CreateFlippers() {
+	// Coordenates and ize of the flippers
+	int x1 = 150;
+	int y1 = 700;
+
+	int x2 = 295;
+	int y2 = 700;
+
+	int w = 52;
+	int h = 10;
+
+	//left Flipper
+	l_flipper = App->physics->CreateRectangle(x1, y1, w, h);
+	l_flipperC = App->physics->CreateCircle(x1, y2, 2);
+	l_flipperC->body->SetType(b2_staticBody);
+
+	// left flipper revolute joint
+	b2RevoluteJointDef LFlipperJoint;
+
+	LFlipperJoint.bodyA = l_flipper->body;
+	LFlipperJoint.bodyB = l_flipperC->body;
+	LFlipperJoint.referenceAngle = 0 * DEGTORAD;
+	LFlipperJoint.enableLimit = true;
+	LFlipperJoint.lowerAngle = -30 * DEGTORAD;
+	LFlipperJoint.upperAngle = 30 * DEGTORAD;
+	LFlipperJoint.localAnchorA.Set(PIXEL_TO_METERS(-33), 0);
+	LFlipperJoint.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_leftFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&LFlipperJoint);
+
+	// right Flipper
+	r_flipper = App->physics->CreateRectangle(x2, y2, w, h);
+	r_flipperC = App->physics->CreateCircle(x2, y2, 2);
+	r_flipperC->body->SetType(b2_staticBody);
+
+	// Flipper Joint
+	b2RevoluteJointDef RFlipperJoint;
+
+	RFlipperJoint.bodyA = r_flipper->body;
+	RFlipperJoint.bodyB = r_flipperC->body;
+	RFlipperJoint.referenceAngle = 0 * DEGTORAD;
+	RFlipperJoint.enableLimit = true;
+	RFlipperJoint.lowerAngle = -30 * DEGTORAD;
+	RFlipperJoint.upperAngle = 30 * DEGTORAD;
+	RFlipperJoint.localAnchorA.Set(PIXEL_TO_METERS(33), 0);
+	RFlipperJoint.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_rightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RFlipperJoint);
+
 }

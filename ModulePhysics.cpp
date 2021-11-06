@@ -38,8 +38,7 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	l_joint=_CreateCircle(183, 877, 3);
-	r_joint=_CreateCircle(348, 877, 3);
+
 
 	// Pivot 0, 0
 
@@ -58,90 +57,29 @@ bool ModulePhysics::Start()
 
 
 	
-	int left_flipper[48] = {
-		285, 927,
-		285, 920,
-		291, 914,
-		298, 908,
-		306, 901,
-		315, 893,
-		323, 886,
-		330, 880,
-		337, 873,
-		344, 870,
-		351, 870,
-		359, 874,
-		363, 879,
-		365, 884,
-		364, 892,
-		359, 897,
-		351, 902,
-		340, 907,
-		332, 911,
-		323, 916,
-		316, 920,
-		307, 925,
-		296, 931,
-		288, 931
 
-	};
-	
 
-	// Pivot 0, 0
-	int right_flipper[48] = {
-		342, 871,
-		347, 870,
-		353, 870,
-		359, 873,
-		363, 878,
-		365, 888,
-		360, 897,
-		351, 902,
-		345, 905,
-		336, 910,
-		328, 914,
-		321, 918,
-		313, 922,
-		304, 927,
-		294, 931,
-		286, 929,
-		283, 922,
-		286, 916,
-		292, 912,
-		298, 906,
-		304, 902,
-		312, 895,
-		324, 886,
-		333, 877
-	};
 
-	l_flipper = CreateChainF(183, 877, left_flipper, 48); //dyn
-	r_flipper = CreateChainF(348, 877, right_flipper, 48); //dyn
-	l_joint = _CreateCircle(183, 877, 3);
-	r_joint = _CreateCircle(348, 877, 3);
 	spring1 = CreateSpring1(555, 1010, 50, 30);
 	spring2 = CreateSpring2(555, 900, 40, 30);
 
 	b2RevoluteJointDef Def;
-	Def.bodyA = l_flipper->body;
-	Def.bodyB = l_joint->body;
 	Def.collideConnected = false;
 	Def.upperAngle = 25 * DEGTORAD;
 	Def.lowerAngle = -25 * DEGTORAD;
 	Def.enableLimit = true;
 	Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
-	l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
+
 
 	b2RevoluteJointDef Def2;
 //>>>>>>> parent of 373d4cc (Tamaño de el lanzador)
-	Def2.bodyA = r_flipper->body;
-	Def2.bodyB = r_joint->body;
+
 	Def2.collideConnected = false;
 	Def2.upperAngle = 30 * DEGTORAD;
 	Def2.lowerAngle = -25 * DEGTORAD;
 	Def2.enableLimit = true;
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
-	r_fix = (b2RevoluteJoint*)world->CreateJoint(&Def2);
+
 
 	spring1 = CreateSpring1(555, 1010, 50, 30);
 	spring2 = CreateSpring2(555, 900, 30, 30);
@@ -387,38 +325,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChainF(int x, int y, int* points, int size)
-{
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
-	b2Body* b = world->CreateBody(&body);
-
-	b2ChainShape shape;
-	b2Vec2* p = new b2Vec2[size / 2];
-	
-	for (uint i = 0; i < size / 2; ++i)
-	{
-		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0] / 1);
-		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1] / 1);
-	}
-
-	shape.CreateLoop(p, size / 2);
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.density = 1.0f;
-
-	b->CreateFixture(&fixture);
-
-	PhysBody* pbody = new PhysBody();
-	pbody->body = b;
-	b->SetUserData(pbody);
-	pbody->height = pbody->width = 0;
-
-	return pbody;
-}
 // 
 update_status ModulePhysics::PostUpdate()
 {

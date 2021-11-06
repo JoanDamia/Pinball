@@ -47,30 +47,24 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-	PhysBody* CreateChainF(int x, int y, int* points, int size);
+
 	PhysBody* CreateSpring1(int x, int y, int width, int height);
 	PhysBody* CreateSpring2(int x, int y, int width, int height);
 
-	PhysBody* l_flipper;
-	PhysBody* r_flipper;
 	PhysBody* spring1;
 	PhysBody* spring2;
-	PhysBody* l_joint;
-	PhysBody* r_joint;
-	b2RevoluteJoint* l_fix;
-	b2RevoluteJoint* r_fix;
+
 	
 	b2DistanceJoint* spring;
-
 	b2Body* mouse_body;
-
+	b2World* world;
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
 private:
 
 	bool debug;
-	b2World* world;
+
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;
 	b2Vec2 p;
