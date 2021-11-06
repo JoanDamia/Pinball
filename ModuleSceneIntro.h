@@ -3,8 +3,11 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "ModulePlayer.h"
 
 class PhysBody;
+
+
 
 class ModuleSceneIntro : public Module
 {
@@ -25,7 +28,9 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 	//p2List<PhysBody*> palo1;
-
+	
+	
+	Spring spring1;
 	PhysBody* sensor;
 	bool sensed;
 
@@ -34,7 +39,9 @@ public:
 	SDL_Texture* rick;
 	SDL_Texture* flipperL;
 	SDL_Texture* lKiker, * rKiker;
-	SDL_Texture* spring;
+	SDL_Texture* spring_1;
+
+	
 	
 	//SDL_Texture* palo1_;
 	uint bonus_fx;

@@ -4,7 +4,11 @@
 #include "p2Point.h"
 #include "p2List.h"
 
-
+struct Spring
+{
+	PhysBody* pivot;
+	PhysBody* mobile;
+};
 class ModulePlayer : public Module
 {
 public:
@@ -14,7 +18,21 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	
 
 public:
+	
+	
+	
+
+	Spring spring;
+	//
+
+	bool sensed;
+
+	
+	
+
+	
 
 };

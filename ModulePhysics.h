@@ -48,19 +48,19 @@ public:
 	PhysBody* CreateFlippers(int x, int y, int* points, int size);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
-	PhysBody* CreateSpring1(int x, int y, int width, int height);
-	PhysBody* CreateSpring2(int x, int y, int width, int height);
+	PhysBody* CreateSpring1(int x, int y, int width, int height, b2BodyType type = b2_staticBody);
+	PhysBody* CreateSpring2(int x, int y, int width, int height, b2BodyType type = b2_dynamicBody);
 
 	PhysBody* l_flipper;
 	PhysBody* r_flipper;
 	PhysBody* l_joint;
 	PhysBody* r_joint;
-	PhysBody* spring1;
-	PhysBody* spring2;
+	/*PhysBody* spring1;
+	PhysBody* spring2;*/
 
 	b2RevoluteJoint* l_fix;
 	b2RevoluteJoint* r_fix;
-	b2DistanceJoint* spring;
+	b2PrismaticJoint* CreatePrismaticJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, b2Vec2 axys, float maxHeight = 0.0f, bool collideConnected = true, bool enableLimit = true);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

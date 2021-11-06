@@ -9,7 +9,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = spring =NULL;
+	circle = box = rick =NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -25,17 +25,25 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+
+	spring1.pivot = App->physics->CreateSpring1(555, 1010, 50, 30);
+	spring1.mobile = App->physics->CreateSpring2(555, 920, 40, 40);
+	App->physics->CreatePrismaticJoint(spring1.mobile, { 0,0 }, spring1.pivot, { 0,0 }, { 0,4 }, 3.9f);
+
+
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	flipperL=App->textures->Load("pinball/flipperL"); 
-	spring = App->textures->Load("pinball/muelle.png");
+	spring_1 = App->textures->Load("pinball/muelle.png");
 	
 	map();
 	colisions();
 	player();
+
+	
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
@@ -45,7 +53,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	App->textures->Unload(spring_1);
 	return true;
 }
 void ModuleSceneIntro::map() {
@@ -298,27 +306,49 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
-	
-	static int forc = 0;
-	
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) != KEY_REPEAT)
+	{
+		App->renderer->Blit(spring_1, 535, 800);
+		
+	}
+	else
+	{
+		App->renderer->Blit(spring_1, 535, 950);
+	}
+
+	spring1.mobile->body->ApplyForce({ 0,-40 }, { 0,0 }, true);
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		forc -= 10;
-		
-		App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
-		
-		/*forc -= 800;*/
+		spring1.mobile->body->ApplyForce({ 0,80 }, { 0,0 }, true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		spring1.mobile->body->ApplyForce({ 0,-900 }, { 0,0 }, true);
 
-		/*if (forc > 1800)
-			forc = 1800;*/
-		
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
-		/*App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);*/
-		if (forc > 4)
-			forc = 4;
-	}
-	App->renderer->Blit(spring, 535, 830, NULL, 1.0f, App->physics->spring2->GetRotation());
+
+
+
+	//static int forc = 0;
+	//
+	//if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	//{
+	//	forc -= 10;
+	//	
+	//	App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);
+	//	
+	//	/*forc -= 800;*/
+
+	//	/*if (forc > 1800)
+	//		forc = 1800;*/
+	//	
+	//}
+	//if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP) {
+	//	/*App->physics->spring2->body->ApplyForceToCenter(b2Vec2(0, -forc), 1);*/
+	//	if (forc > 4)
+	//		forc = 4;
+	//}
+	//App->renderer->Blit(spring, 535, 830, NULL, 1.0f, App->physics->spring2->GetRotation());
 	// ray -----------------
 	if(ray_on == true)
 	{
