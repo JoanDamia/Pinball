@@ -39,6 +39,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	flipperL=App->textures->Load("pinball/flipperL");
 	flipperL = App->textures->Load("pinball/flipperR");
+	spring_1 = App->textures->Load("pinball/muelle.png");
 	
 	map();
 	colisions();
