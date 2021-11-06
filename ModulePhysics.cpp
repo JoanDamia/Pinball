@@ -43,7 +43,7 @@ bool ModulePhysics::Start()
 
 	// Pivot 0, 0
 
-<<<<<<< Updated upstream
+
 	//b2RevoluteJointDef Def;
 	//Def.bodyA = l_flipper->body;
 	//Def.bodyB = l_joint->body;
@@ -54,17 +54,8 @@ bool ModulePhysics::Start()
 	//Def.localAnchorA.Set(PIXEL_TO_METERS(10), PIXEL_TO_METERS(8));
 	//l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
 
-	/*b2RevoluteJointDef Def2;
-=======
-	int right_flipper[14] = {
-		72, 5,
-		65, 0,
-		2, 6,
-		0, 12,
-		4, 16,
-		64, 18,
-		72, 14
-=======
+
+
 
 	
 	int left_flipper[48] = {
@@ -92,7 +83,7 @@ bool ModulePhysics::Start()
 		307, 925,
 		296, 931,
 		288, 931
->>>>>>> Stashed changes
+
 	};
 	
 
@@ -187,7 +178,7 @@ bool ModulePhysics::Start()
 	return true;
 }
 
-// 
+
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
