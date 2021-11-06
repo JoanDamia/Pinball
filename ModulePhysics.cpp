@@ -17,6 +17,8 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
+	
+	mouse_body = NULL;
 	debug = true;
 }
 
@@ -41,6 +43,7 @@ bool ModulePhysics::Start()
 
 	// Pivot 0, 0
 
+<<<<<<< Updated upstream
 	//b2RevoluteJointDef Def;
 	//Def.bodyA = l_flipper->body;
 	//Def.bodyB = l_joint->body;
@@ -61,11 +64,68 @@ bool ModulePhysics::Start()
 		4, 16,
 		64, 18,
 		72, 14
+=======
+
+	
+	int left_flipper[48] = {
+		285, 927,
+		285, 920,
+		291, 914,
+		298, 908,
+		306, 901,
+		315, 893,
+		323, 886,
+		330, 880,
+		337, 873,
+		344, 870,
+		351, 870,
+		359, 874,
+		363, 879,
+		365, 884,
+		364, 892,
+		359, 897,
+		351, 902,
+		340, 907,
+		332, 911,
+		323, 916,
+		316, 920,
+		307, 925,
+		296, 931,
+		288, 931
+>>>>>>> Stashed changes
+	};
+	
+
+	// Pivot 0, 0
+	int right_flipper[48] = {
+		342, 871,
+		347, 870,
+		353, 870,
+		359, 873,
+		363, 878,
+		365, 888,
+		360, 897,
+		351, 902,
+		345, 905,
+		336, 910,
+		328, 914,
+		321, 918,
+		313, 922,
+		304, 927,
+		294, 931,
+		286, 929,
+		283, 922,
+		286, 916,
+		292, 912,
+		298, 906,
+		304, 902,
+		312, 895,
+		324, 886,
+		333, 877
 	};
 
-
-	l_flipper = CreateFlippers(183, 877, left_flipper, 48); //dyn
-	r_flipper = CreateFlippers(348, 877, right_flipper, 14); //dyn
+	l_flipper = CreateChainF(183, 877, left_flipper, 48); //dyn
+	r_flipper = CreateChainF(348, 877, right_flipper, 48); //dyn
 	l_joint = _CreateCircle(183, 877, 3);
 	r_joint = _CreateCircle(348, 877, 3);
 	spring1 = CreateSpring1(555, 1010, 50, 30);
@@ -82,7 +142,7 @@ bool ModulePhysics::Start()
 	l_fix = (b2RevoluteJoint*)world->CreateJoint(&Def);
 
 	b2RevoluteJointDef Def2;
->>>>>>> parent of 373d4cc (Tamaño de el lanzador)
+//>>>>>>> parent of 373d4cc (Tamaño de el lanzador)
 	Def2.bodyA = r_flipper->body;
 	Def2.bodyB = r_joint->body;
 	Def2.collideConnected = false;
@@ -104,10 +164,10 @@ bool ModulePhysics::Start()
 	Def3.collideConnected = true;
 	Def3.frequencyHz = 4.0f;
 	Def3.dampingRatio = 0.5f;
-	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);*/
+	spring = (b2DistanceJoint*)world->CreateJoint(&Def3);
 
-	// big static circle as "ground" in the middle of the screen
-	/*int x = SCREEN_WIDTH / 2;
+	/* big static circle as "ground" in the middle of the screen*/
+	int x = SCREEN_WIDTH * 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
 
@@ -122,7 +182,7 @@ bool ModulePhysics::Start()
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-	big_ball->CreateFixture(&fixture);*/
+	big_ball->CreateFixture(&fixture);
 
 	return true;
 }
@@ -371,34 +431,30 @@ PhysBody* ModulePhysics::CreateChainF(int x, int y, int* points, int size)
 // 
 update_status ModulePhysics::PostUpdate()
 {
-
-
-
-
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 
-
 		debug = !debug; 
-
-		if (debug) 
-
-
-			return UPDATE_CONTINUE;
-
-
-
-
-
-			// Bonus code: this will iterate all objects in the world and draw the circles
-			// You need to provide your own macro to translate meters to pixels
-			for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
-			{
-				for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
-				{
-					switch (f->GetType())
+			
+				if (!debug) {
+					if (mouse_joint != nullptr)
 					{
+						world->DestroyJoint(mouse_joint);
+						mouse_joint = nullptr;
+					}
+					
+				}
+		if(debug)
+			return UPDATE_CONTINUE;
+			
+
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
+	{
+		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		{
+			switch (f->GetType())
+			{
 						// Draw circles ------------------------------------------------
-					case b2Shape::e_circle:
+				case b2Shape::e_circle:
 					{
 						b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 						b2Vec2 pos = f->GetBody()->GetPosition();
@@ -457,27 +513,72 @@ update_status ModulePhysics::PostUpdate()
 						App->renderer->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
 					}
 					break;
-					}
+			}
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				
+				b2Vec2 p = { PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) };
+				if (f->GetShape()->TestPoint(b->GetTransform(), p) == true)
+				{
 
-					// TODO 1: If mouse button 1 is pressed ...
-					// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-					// test if the current body contains mouse position
+					
+					mouse_body = b;
+
+					// Get current mouse position
+					b2Vec2 mousePosition;
+					mousePosition.x = p.x;
+					mousePosition.y = p.y;
+
+					// Define new mouse joint
+					b2MouseJointDef def;
+					def.bodyA = ground; 
+					def.bodyB = mouse_body; 
+					def.target = mousePosition; 
+					def.dampingRatio = 0.5f; 
+					def.frequencyHz = 2.0f; 
+					def.maxForce = 200.0f * mouse_body->GetMass(); 
+
+					
+					mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
 				}
 			}
-		
+				
+				
+			
+		}
+	}		
 	
+	if (mouse_body != nullptr && mouse_joint != nullptr)
+	{
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			// Get new mouse position and re-target mouse_joint there
+			b2Vec2 mousePosition;
+			mousePosition.x = PIXEL_TO_METERS(App->input->GetMouseX());
+			mousePosition.y = PIXEL_TO_METERS(App->input->GetMouseY());
+			mouse_joint->SetTarget(mousePosition);
 
-	// If a body was selected we will attach a mouse joint to it
-	// so we can pull it around
-	// TODO 2: If a body was selected, create a mouse joint
-	// using mouse_joint class property
+			
+			App->renderer->DrawLine(METERS_TO_PIXELS(mouse_body->GetPosition().x), METERS_TO_PIXELS(mouse_body->GetPosition().y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 0, 0);
+		}
+	}
 
+	
+	if (mouse_body != nullptr && mouse_joint != nullptr)
+	{
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
+		{
+			
+			world->DestroyJoint(mouse_joint);
 
-	// TODO 3: If the player keeps pressing the mouse button, update
-	// target position and draw a red line between both anchor points
+			
+			mouse_joint = nullptr;
+			mouse_body = nullptr;
+		}
+	}
 
-	// TODO 4: If the player releases the mouse button, destroy the joint
-
+		
+			
 	return UPDATE_CONTINUE;
 }
 
