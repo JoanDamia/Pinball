@@ -61,7 +61,7 @@ bool ModulePhysics::Start()
 
 
 	
-
+/*
 	b2RevoluteJointDef Def;
 	Def.collideConnected = false;
 	Def.upperAngle = 25 * DEGTORAD;
@@ -79,7 +79,7 @@ bool ModulePhysics::Start()
 	Def2.enableLimit = true;
 	Def2.localAnchorA.Set(PIXEL_TO_METERS(65), PIXEL_TO_METERS(9));
 
-
+	*/
 	
 
 	/* big static circle as "ground" in the middle of the screen*/

@@ -82,7 +82,7 @@ bool ModuleSceneIntro::Start()
 	revoluteJointDef_rFlipper1.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
 	revoluteJointDef_rFlipper1.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_right1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper1);
-	flipperR = App->textures->Load("pinball/flipperR");
+	flipperR = App->textures->Load("pinball/flipperR.png");
 
 	//Left Flipper1
 	l_flipper1 = App->physics->CreateRectangle(240, 887, 67, 14);
@@ -98,7 +98,7 @@ bool ModuleSceneIntro::Start()
 	revoluteJointDef_lFlipper1.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
 	revoluteJointDef_lFlipper1.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper1);
-	flipperL = App->textures->Load("pinball/flipperL");
+	flipperL = App->textures->Load("pinball/flipperL.png");
 
 
 
@@ -142,8 +142,6 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
-	flipperL= App->textures->Load("pinball/flipperL");
-	flipperR = App->textures->Load("pinball/flipperR");
 	spring_1 = App->textures->Load("pinball/muelle.png");
 	
 	map();
@@ -383,10 +381,21 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	// Flipper controls
+/*
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
 		r_flipper1->body->ApplyForceToCenter(force, 1);
 		revoluteJointDef_rFlipper1.lowerAngle = 30 * DEGTORAD;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		l_flipper1->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_lFlipper1.lowerAngle = 30 * DEGTORAD;
+	}
+	*/
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		r_flipper1->body->ApplyForceToCenter(b2Vec2(0, -200), 1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
@@ -399,8 +408,8 @@ update_status ModuleSceneIntro::Update()
 	float32 flipperLeftAngle = l_flipper1->body->GetAngle();
 	float32 flipperRightAngle = r_flipper1->body->GetAngle();
 
-	App->renderer->Blit(flipperR, 330, 888, NULL, 0, RADTODEG * (flipperRightAngle), 67, 14);
-	App->renderer->Blit(flipperL, 240, 887, NULL, 0, RADTODEG * (flipperLeftAngle), 67, 14);
+	App->renderer->Blit(flipperR, 330, 888, NULL, 1.0f, r_flipper1->GetRotation());
+	App->renderer->Blit(flipperL, 240, 888, NULL, 1.0f, l_flipper1->GetRotation());
 
 	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
