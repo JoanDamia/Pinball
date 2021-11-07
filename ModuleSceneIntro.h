@@ -26,7 +26,7 @@ public:
 	void map();
 	void colisions();
 	//void player();
-	void CreateFlippers();
+	//void CreateFlippers();
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
@@ -37,7 +37,9 @@ public:
 	PhysBody* l_flipperC;
 	PhysBody* r_flipper;
 	PhysBody* r_flipperC;
-	int flipperF;
+	b2RevoluteJointDef revoluteJointDef_rFlipper;
+	b2RevoluteJointDef revoluteJointDef_lFlipper;
+	//int flipperF;
 	
 	//p2List<PhysBody*> palo1;
 

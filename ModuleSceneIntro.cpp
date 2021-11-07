@@ -13,7 +13,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
-	flipperF = -200;
+
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -67,12 +67,44 @@ bool ModuleSceneIntro::Start()
 	bumpers.add(bumperer6);
 	
 
+	//Right Flipper
+
+	r_flipper = App->physics->CreateRectangle(149, 376, 26, 7);
+	r_flipperC = App->physics->CreateCircle(149, 376, 2);
+	r_flipperC->body->SetType(b2_staticBody);
+
+
+	revoluteJointDef_rFlipper.bodyA = r_flipper->body;
+	revoluteJointDef_rFlipper.bodyB = r_flipperC->body;
+	revoluteJointDef_rFlipper.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_rFlipper.enableLimit = true;
+	revoluteJointDef_rFlipper.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_rFlipper.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_rFlipper.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
+	revoluteJointDef_rFlipper.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper);
+
+	//Left Flipper
+	l_flipper = App->physics->CreateRectangle(89, 376, 26, 7);
+	l_flipperC = App->physics->CreateCircle(87, 376, 2);
+	l_flipperC->body->SetType(b2_staticBody);
+
+	revoluteJointDef_lFlipper.bodyA = l_flipper->body;
+	revoluteJointDef_lFlipper.bodyB = l_flipperC->body;
+	revoluteJointDef_lFlipper.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_lFlipper.enableLimit = true;
+	revoluteJointDef_lFlipper.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_lFlipper.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_lFlipper.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
+	revoluteJointDef_lFlipper.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper);
+
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/pinball3.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
-	flipperL=App->textures->Load("pinball/flipperL");
+	flipperL= App->textures->Load("pinball/flipperL");
 	flipperL = App->textures->Load("pinball/flipperR");
 	spring_1 = App->textures->Load("pinball/muelle.png");
 	
@@ -218,6 +250,7 @@ void ModuleSceneIntro::map() {
 	ricks.add(App->physics->CreateChain(0, 0, otromas, 10));
 	
 }
+
 void ModuleSceneIntro::colisions() {
 	
 	/*circles.add(App->physics->_CreateCircle(98, 118, 45));
@@ -311,14 +344,19 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-
-	
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		l_flipper->body->ApplyForceToCenter(b2Vec2(0, flipperF), 1);
-	}
+	// Flipper controls
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		r_flipper->body->ApplyForceToCenter(b2Vec2(0, flipperF), 1);
+		b2Vec2 force = b2Vec2(0, -200);
+		r_flipper->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_rFlipper.lowerAngle = 30 * DEGTORAD;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		l_flipper->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_lFlipper.lowerAngle = 30 * DEGTORAD;
+	}
+
 
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) != KEY_REPEAT)
@@ -395,7 +433,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 }
 
-void ModuleSceneIntro::CreateFlippers() {
+/*void ModuleSceneIntro::CreateFlippers() {
 	// Coordenates and ize of the flippers
 	int x1 = 150;
 	int y1 = 700;
@@ -443,3 +481,4 @@ void ModuleSceneIntro::CreateFlippers() {
 	b2RevoluteJoint* joint_rightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RFlipperJoint);
 
 }
+*/
