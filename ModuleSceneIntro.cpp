@@ -82,7 +82,7 @@ bool ModuleSceneIntro::Start()
 	revoluteJointDef_rFlipper1.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
 	revoluteJointDef_rFlipper1.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_right1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper1);
-	flipperR = App->textures->Load("pinball/flipperR.png");
+	flipperR = App->textures->Load("pinball/flipperR2.png");
 
 	//Left Flipper1
 	l_flipper1 = App->physics->CreateRectangle(240, 887, 67, 14);
@@ -98,7 +98,7 @@ bool ModuleSceneIntro::Start()
 	revoluteJointDef_lFlipper1.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
 	revoluteJointDef_lFlipper1.localAnchorB.Set(0, 0);
 	b2RevoluteJoint* joint_left1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper1);
-	flipperL = App->textures->Load("pinball/flipperL.png");
+	flipperL = App->textures->Load("pinball/flipperL2.png");
 
 
 
@@ -408,8 +408,8 @@ update_status ModuleSceneIntro::Update()
 	float32 flipperLeftAngle = l_flipper1->body->GetAngle();
 	float32 flipperRightAngle = r_flipper1->body->GetAngle();
 
-	App->renderer->Blit(flipperR, 330, 888, NULL, 1.0f, r_flipper1->GetRotation());
-	App->renderer->Blit(flipperL, 240, 888, NULL, 1.0f, l_flipper1->GetRotation());
+	App->renderer->Blit(flipperR, 277, 862, NULL, 1.0f, r_flipper1->GetRotation());
+	App->renderer->Blit(flipperL, 108, 852, NULL, 1.0f, l_flipper1->GetRotation());
 
 	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
