@@ -25,10 +25,9 @@ bool ModulePlayer::Start()
 	return true;
 }
 void ModulePlayer::player() {
-	circles.add(App->physics->CreateCircle(550, 750, 15));
-	//App->renderer->Blit(circles, 550, 750);
-
-	circles.getLast()->data->listener = this;
+	ball = App->physics->CreateCircle(550, 750, 15);
+	
+	ball->listener = this;
 }
 // Unload assets
 bool ModulePlayer::CleanUp()
@@ -41,6 +40,16 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+
+	if (fall == true)
+	{
+		ball->body->SetTransform(b2Vec2(PIXEL_TO_METERS(550), PIXEL_TO_METERS(750)), 0);
+
+		/*muell = true;*/
+		
+		fall = false;
+		
+	}
 	return UPDATE_CONTINUE;
 }
 

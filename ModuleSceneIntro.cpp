@@ -101,6 +101,10 @@ bool ModuleSceneIntro::Start()
 	flipperL = App->textures->Load("pinball/flipperL");
 
 
+
+	fall = App->physics->CreateRectangleSensor(245, 1000, 300, 20);
+	fall->listener = this;
+
 /*	//Right Flipper2
 
 	r_flipper2 = App->physics->CreateRectangle(149, 376, 36, 10);
@@ -145,7 +149,6 @@ bool ModuleSceneIntro::Start()
 	map();
 	colisions();
 	//player();
-	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
 }

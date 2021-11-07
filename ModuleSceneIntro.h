@@ -33,6 +33,7 @@ public:
 	p2List<PhysBody*> ricks;
 	p2List<Bumper*> bumpers;
 
+	PhysBody* fall;
 	PhysBody* l_flipper1 = nullptr;
 	PhysBody* l_flipperC1;
 	PhysBody* l_flipper2;

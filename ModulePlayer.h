@@ -44,12 +44,14 @@ public:
 	int nPosX = 0;
 	int nPosY = 0;
 public:
+
+	PhysBody* ball;
 	p2List<PhysBody*> circles;
 	//SDL_Texture* circle;
 	Spring spring;
 	//
-	
+	bool fall;
 
-	bool sensed;
+	
 
 };
