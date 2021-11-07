@@ -5,6 +5,8 @@
 #include "p2List.h"
 #include "ModulePhysics.h"
 #include "Animation.h"
+#include "ModuleTextures.h"
+
 
 struct Spring
 {
@@ -25,7 +27,7 @@ public:
 	bool CleanUp();
 	update_status PostUpdate();
 	SDL_Texture* texture = nullptr;
-	Animation* currentAnimation = nullptr;
+	//Animation* currentAnimation;
 	SDL_Texture* table = nullptr;
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };

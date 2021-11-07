@@ -67,37 +67,71 @@ bool ModuleSceneIntro::Start()
 	bumpers.add(bumperer6);
 	
 
-	//Right Flipper
+	//Right Flipper1
+	r_flipper1 = App->physics->CreateRectangle(330, 888, 67, 14);
+	r_flipperC1 = App->physics->CreateCircle(330, 888, 6);
+	r_flipperC1->body->SetType(b2_staticBody);
 
-	r_flipper = App->physics->CreateRectangle(149, 376, 26, 7);
-	r_flipperC = App->physics->CreateCircle(149, 376, 2);
-	r_flipperC->body->SetType(b2_staticBody);
+
+	revoluteJointDef_rFlipper1.bodyA = r_flipper1->body;
+	revoluteJointDef_rFlipper1.bodyB = r_flipperC1->body;
+	revoluteJointDef_rFlipper1.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_rFlipper1.enableLimit = true;
+	revoluteJointDef_rFlipper1.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_rFlipper1.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_rFlipper1.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
+	revoluteJointDef_rFlipper1.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_right1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper1);
+	flipperR = App->textures->Load("pinball/flipperR");
+
+	//Left Flipper1
+	l_flipper1 = App->physics->CreateRectangle(240, 887, 67, 14);
+	l_flipperC1 = App->physics->CreateCircle(200, 887, 6);
+	l_flipperC1->body->SetType(b2_staticBody);
+
+	revoluteJointDef_lFlipper1.bodyA = l_flipper1->body;
+	revoluteJointDef_lFlipper1.bodyB = l_flipperC1->body;
+	revoluteJointDef_lFlipper1.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_lFlipper1.enableLimit = true;
+	revoluteJointDef_lFlipper1.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_lFlipper1.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_lFlipper1.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
+	revoluteJointDef_lFlipper1.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_left1 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper1);
+	flipperL = App->textures->Load("pinball/flipperL");
 
 
-	revoluteJointDef_rFlipper.bodyA = r_flipper->body;
-	revoluteJointDef_rFlipper.bodyB = r_flipperC->body;
-	revoluteJointDef_rFlipper.referenceAngle = 0 * DEGTORAD;
-	revoluteJointDef_rFlipper.enableLimit = true;
-	revoluteJointDef_rFlipper.lowerAngle = -30 * DEGTORAD;
-	revoluteJointDef_rFlipper.upperAngle = 30 * DEGTORAD;
-	revoluteJointDef_rFlipper.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
-	revoluteJointDef_rFlipper.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* joint_right = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper);
+/*	//Right Flipper2
 
-	//Left Flipper
-	l_flipper = App->physics->CreateRectangle(89, 376, 26, 7);
-	l_flipperC = App->physics->CreateCircle(87, 376, 2);
-	l_flipperC->body->SetType(b2_staticBody);
+	r_flipper2 = App->physics->CreateRectangle(149, 376, 36, 10);
+	r_flipperC2 = App->physics->CreateCircle(149, 376, 4);
+	r_flipperC2->body->SetType(b2_staticBody);
 
-	revoluteJointDef_lFlipper.bodyA = l_flipper->body;
-	revoluteJointDef_lFlipper.bodyB = l_flipperC->body;
-	revoluteJointDef_lFlipper.referenceAngle = 0 * DEGTORAD;
-	revoluteJointDef_lFlipper.enableLimit = true;
-	revoluteJointDef_lFlipper.lowerAngle = -30 * DEGTORAD;
-	revoluteJointDef_lFlipper.upperAngle = 30 * DEGTORAD;
-	revoluteJointDef_lFlipper.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
-	revoluteJointDef_lFlipper.localAnchorB.Set(0, 0);
-	b2RevoluteJoint* joint_left = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper);
+	revoluteJointDef_rFlipper2.bodyA = r_flipper1->body;
+	revoluteJointDef_rFlipper2.bodyB = r_flipperC1->body;
+	revoluteJointDef_rFlipper2.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_rFlipper2.enableLimit = true;
+	revoluteJointDef_rFlipper2.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_rFlipper2.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_rFlipper2.localAnchorA.Set(PIXEL_TO_METERS(13), 0);
+	revoluteJointDef_rFlipper2.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_right2 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_rFlipper2);
+
+	//Left Flipper2
+	l_flipper2 = App->physics->CreateRectangle(89, 376, 36, 10);
+	l_flipper2 = App->physics->CreateCircle(87, 376, 4);
+	l_flipper2->body->SetType(b2_staticBody);
+
+	revoluteJointDef_lFlipper2.bodyA = l_flipper1->body;
+	revoluteJointDef_lFlipper2.bodyB = l_flipperC1->body;
+	revoluteJointDef_lFlipper2.referenceAngle = 0 * DEGTORAD;
+	revoluteJointDef_lFlipper2.enableLimit = true;
+	revoluteJointDef_lFlipper2.lowerAngle = -30 * DEGTORAD;
+	revoluteJointDef_lFlipper2.upperAngle = 30 * DEGTORAD;
+	revoluteJointDef_lFlipper2.localAnchorA.Set(PIXEL_TO_METERS(-13), 0);
+	revoluteJointDef_lFlipper2.localAnchorB.Set(0, 0);
+	b2RevoluteJoint* joint_left2 = (b2RevoluteJoint*)App->physics->world->CreateJoint(&revoluteJointDef_lFlipper2);
+	*/
 
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
@@ -105,7 +139,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	App->audio->PlayMusic("pinball/starwars.ogg");
 	flipperL= App->textures->Load("pinball/flipperL");
-	flipperL = App->textures->Load("pinball/flipperR");
+	flipperR = App->textures->Load("pinball/flipperR");
 	spring_1 = App->textures->Load("pinball/muelle.png");
 	
 	map();
@@ -120,7 +154,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-	App->fonts->UnLoad();
+	//App->fonts->UnLoad();
 	return true;
 }
 void ModuleSceneIntro::map() {
@@ -266,6 +300,8 @@ void ModuleSceneIntro::colisions() {
 ////	circles.getLast()->data->listener = this;
 //}
  //Update: draw background
+
+
 update_status ModuleSceneIntro::Update()
 {
 	
@@ -277,8 +313,7 @@ update_status ModuleSceneIntro::Update()
 	}*/
 
 	
-	
-	//App->renderer->App->physics->l_flipper.Blit(flipperL, 183, 877);
+	//App->renderer->App->physics->l_flipper1.Blit(flipperL, 183, 877);
 
 
 
@@ -347,17 +382,35 @@ update_status ModuleSceneIntro::Update()
 	// Flipper controls
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
-		r_flipper->body->ApplyForceToCenter(force, 1);
-		revoluteJointDef_rFlipper.lowerAngle = 30 * DEGTORAD;
+		r_flipper1->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_rFlipper1.lowerAngle = 30 * DEGTORAD;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		b2Vec2 force = b2Vec2(0, -200);
-		l_flipper->body->ApplyForceToCenter(force, 1);
-		revoluteJointDef_lFlipper.lowerAngle = 30 * DEGTORAD;
+		l_flipper1->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_lFlipper1.lowerAngle = 30 * DEGTORAD;
 	}
 
 
+	float32 flipperLeftAngle = l_flipper1->body->GetAngle();
+	float32 flipperRightAngle = r_flipper1->body->GetAngle();
+
+	App->renderer->Blit(flipperR, 330, 888, NULL, 0, RADTODEG * (flipperRightAngle), 67, 14);
+	App->renderer->Blit(flipperL, 240, 887, NULL, 0, RADTODEG * (flipperLeftAngle), 67, 14);
+
+	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		r_flipper2->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_rFlipper2.lowerAngle = 30 * DEGTORAD;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		b2Vec2 force = b2Vec2(0, -200);
+		l_flipper2->body->ApplyForceToCenter(force, 1);
+		revoluteJointDef_lFlipper2.lowerAngle = 30 * DEGTORAD;
+	}
+	*/
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) != KEY_REPEAT)
 	{

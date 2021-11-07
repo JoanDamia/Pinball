@@ -26,20 +26,26 @@ public:
 	void map();
 	void colisions();
 	//void player();
-	//void CreateFlippers();
+	void CreateFlippers();
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 	p2List<Bumper*> bumpers;
 
-	PhysBody* l_flipper;
-	PhysBody* l_flipperC;
-	PhysBody* r_flipper;
-	PhysBody* r_flipperC;
-	b2RevoluteJointDef revoluteJointDef_rFlipper;
-	b2RevoluteJointDef revoluteJointDef_lFlipper;
-	//int flipperF;
+	PhysBody* l_flipper1 = nullptr;
+	PhysBody* l_flipperC1;
+	PhysBody* l_flipper2;
+	PhysBody* l_flipperC2;
+	PhysBody* r_flipper1 = nullptr;
+	PhysBody* r_flipperC1;
+	PhysBody* r_flipper2;
+	PhysBody* r_flipperC2;
+	b2RevoluteJointDef revoluteJointDef_rFlipper1;
+	b2RevoluteJointDef revoluteJointDef_lFlipper1;
+	b2RevoluteJointDef revoluteJointDef_rFlipper2;
+	b2RevoluteJointDef revoluteJointDef_lFlipper2;
+	int flipperF;
 	
 	//p2List<PhysBody*> palo1;
 

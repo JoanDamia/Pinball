@@ -48,8 +48,8 @@ update_status ModulePlayer::Update()
 update_status ModulePlayer::PostUpdate() {
 	if (IsEnabled())
 	{
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		App->renderer->Blit(texture, position.x, position.y, &rect);
+		//SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		//App->renderer->Blit(texture, position.x, position.y, &rect);
 	}
 	else {
 		score = 0000;
@@ -58,13 +58,13 @@ update_status ModulePlayer::PostUpdate() {
 		
 	}
 	sprintf_s(scoreText, 10, "%4d", score);
-	App->fonts->BlitText(339, 24, scoreFont, scoreText);
+	//App->fonts->BlitText(339, 24, scoreFont, scoreText);
 
 	sprintf_s(limitText, 10, "%4d", score);
-	App->fonts->BlitText(339, 34, scoreFont, limitText);
+//	App->fonts->BlitText(339, 34, scoreFont, limitText);
 
 	sprintf_s(stageText, 10, "%2d", highScore);
-	App->fonts->BlitText(356, 12, scoreFont, stageText);
+	//App->fonts->BlitText(356, 12, scoreFont, stageText);
 
 	App->renderer->Blit(table, 310, 10, NULL);
 
