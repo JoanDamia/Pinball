@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "p2List.h"
-
+#include "ModulePhysics.h"
 
 struct Spring
 {
@@ -20,12 +20,15 @@ public:
 
 	bool Start();
 	update_status Update();
+	void player();
 	bool CleanUp();
-
+	
 public:
-
+	p2List<PhysBody*> circles;
+	//SDL_Texture* circle;
 	Spring spring;
 	//
+	
 
 	bool sensed;
 

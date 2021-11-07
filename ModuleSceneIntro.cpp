@@ -32,6 +32,40 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreatePrismaticJoint(spring1.mobile, { 0,0 }, spring1.pivot, { 0,0 }, { 0,4 }, 3.9f);
 
 
+	
+	Bumper* bumperer1 = new Bumper;
+	bumperer1->bump = App->physics->_CreateCircle(98, 118, 45);
+	bumperer1->bump->listener = this;
+	bumpers.add(bumperer1);
+
+
+
+	Bumper* bumperer2 = new Bumper;
+	bumperer2->bump = App->physics->_CreateCircle(266, 302, 45);
+	bumperer2->bump->listener = this;
+	bumpers.add(bumperer2);
+
+	Bumper* bumperer3 = new Bumper;
+	bumperer3->bump = App->physics->_CreateCircle(345, 698, 45);
+	bumperer3->bump->listener = this;
+	bumpers.add(bumperer3);
+
+	Bumper* bumperer4 = new Bumper;
+	bumperer4->bump = App->physics->_CreateCircle(173, 527, 45);
+	bumperer4->bump->listener = this;
+	bumpers.add(bumperer4);
+
+	Bumper* bumperer5 = new Bumper;
+	bumperer5->bump = App->physics->CreateBumper(20, 316, 80, 10);
+	bumperer5->bump->listener = this;
+	bumpers.add(bumperer5);
+	
+	Bumper* bumperer6 = new Bumper;
+	bumperer6->bump = App->physics->CreateBumper(500, 316, 70, 10);
+	bumperer6->bump->listener = this;
+	bumpers.add(bumperer6);
+	
+
 	circle = App->textures->Load("pinball/BB8 def.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/pinball3.png");
@@ -43,7 +77,7 @@ bool ModuleSceneIntro::Start()
 	
 	map();
 	colisions();
-	player();
+	//player();
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
@@ -184,19 +218,20 @@ void ModuleSceneIntro::map() {
 	
 }
 void ModuleSceneIntro::colisions() {
-	circles.add(App->physics->_CreateCircle(98, 118, 45));
-
+	
+	/*circles.add(App->physics->_CreateCircle(98, 118, 45));
 	circles.add(App->physics->_CreateCircle(266, 302, 45));
 	circles.add(App->physics->_CreateCircle(345, 698, 45));
-	circles.add(App->physics->_CreateCircle(173, 527, 45));
+	circles.add(App->physics->_CreateCircle(173, 527, 45));*/
+
 }
-void ModuleSceneIntro::player() {
-	circles.add(App->physics->CreateCircle(550, 750, 15));
-	App->renderer->Blit(circle, 550, 750);
-	
-	/*circles.getLast()->data->listener = this;*/
-}
-// Update: draw background
+//void ModuleSceneIntro::player() {
+//	circles.add(App->physics->CreateCircle(550, 750, 15));
+//	//App->renderer->Blit(circles, 550, 750);
+////	
+////	circles.getLast()->data->listener = this;
+//}
+ //Update: draw background
 update_status ModuleSceneIntro::Update()
 {
 	
@@ -324,6 +359,23 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+
+	p2List_item<Bumper*>* bumperer = bumpers.getFirst();
+	while (bumperer != NULL)
+	{
+		if (bodyA == bumperer->data->bump && bodyB->listener == (Module*)App->player)
+		{
+			
+			b2Vec2 forc(bodyB->body->GetWorldCenter() - bodyA->body->GetWorldCenter());
+			forc *= 4;
+			bodyB->body->ApplyLinearImpulse(forc, bodyB->body->GetWorldCenter(), true);
+			
+			
+			return;
+		}
+		bumperer = bumperer->next;
+	}
+
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);

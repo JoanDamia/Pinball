@@ -26,6 +26,7 @@ public:
 
 public:
 	int width, height;
+	
 	b2Body* body;
 	Module* listener;
 };
@@ -45,6 +46,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius);
 	PhysBody* _CreateCircle(int x, int y, int radius);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateBumper(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 

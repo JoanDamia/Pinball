@@ -8,6 +8,11 @@
 
 class PhysBody;
 
+struct Bumper {
+
+	PhysBody* bump;
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -20,12 +25,14 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void map();
 	void colisions();
-	void player();
+	//void player();
 	void CreateFlippers();
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
+	p2List<Bumper*> bumpers;
+
 	PhysBody* l_flipper;
 	PhysBody* l_flipperC;
 	PhysBody* r_flipper;
