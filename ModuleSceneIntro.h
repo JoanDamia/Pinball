@@ -58,8 +58,8 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
-	SDL_Texture* flipperL;
-	SDL_Texture* flipperR;
+	SDL_Texture* flipperL2;
+	SDL_Texture* flipperR2;
 	SDL_Texture* spring_1;
 	//SDL_Texture* palo1_;
 	uint bonus_fx;
