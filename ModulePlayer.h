@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "p2List.h"
 #include "ModulePhysics.h"
+#include "Animation.h"
 
 struct Spring
 {
@@ -22,7 +23,24 @@ public:
 	update_status Update();
 	void player();
 	bool CleanUp();
-	
+	update_status PostUpdate();
+	SDL_Texture* texture = nullptr;
+	Animation* currentAnimation = nullptr;
+	SDL_Texture* table = nullptr;
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
+
+	int limitFont = -1;
+	char limitText[10] = { "\0" };
+
+	int stageFont = -1;
+	char stageText[10] = { "\0" };
+	uint score = 0000;
+	uint scoreAnt = 00;
+	uint highScore = 00;
+	iPoint position;
+	int nPosX = 0;
+	int nPosY = 0;
 public:
 	p2List<PhysBody*> circles;
 	//SDL_Texture* circle;
